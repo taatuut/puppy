@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-md-12">
+    <ml-input qtext="ctrl.qtext" search="ctrl.search(qtext)" suggest="ctrl.suggest(val)" template="fa" class="search"></ml-input>
+  </div>
+</div>
+
+<div class="search row">
+  <ml-facets class="col-md-3 right-col" facets="ctrl.response.facets" toggle="ctrl.toggleFacet(facet, value)" active-facets="ctrl.mlSearch.activeFacets" negate="ctrl.toggleNegatedFacet(facet,value)" show-more="ctrl.showMoreFacets(facet, facetName, 5)"></ml-facets>
+  <div class="col-md-9">
+    <uib-tabset>
+	<uib-tab heading="Results">
+    <h4 ng-if="ctrl.response.total === 0">No results to show</h4>
+
+    <div ng-if="ctrl.response.total > 0" class="results">
+      <div class="pagination-ctrls">
+        <uib-pagination class="pagination-sm" ng-model="ctrl.page" ng-change="ctrl.search()" max-size="10" boundary-links="true" total-items="ctrl.response.total" items-per-page="ctrl.response['page-length']">
+        </uib-pagination>
+        <ml-snippet set-snippet="ctrl.setSnippet(type)"></ml-snippet>
+      </div>
+      <ml-metrics search="ctrl.response" ></ml-metrics>
+      <ml-results template="app/search/search-results.html" results="ctrl.response.results"></ml-results>
+    </div>
+	</uib-tab>
+	<uib-tab heading="Map">
+<ml-google-search-map map="ctrl.myMap.map" options="ctrl.myMap.options"
+            facets="ctrl.response.facets" markers="ctrl.myMap.markers" bounds-changed="ctrl.boundsChanged(bounds)"
+            show-result="ctrl.showResult(uri)" show-context-menu="ctrl.resetMap()" selections="ctrl.myMap.selections">
+</ml-google-search-map>
+<ml-google-search-map-legend facets="ctrl.response.facets"></ml-google-search-map-legend>
+	</uib-tab>
+	<uib-tab heading="Charts">
+<!-- Income by Gender -->
+    <ml-highchart highchart-config="ctrl.highchartConfig" ml-search="ctrl.mlSearch"></ml-highchart>
+<!-- UserExperience by Gender -->
+	  <ml-highchart highchart-config="ctrl.highchartConfig1" ml-search="ctrl.mlSearch"></ml-highchart>
+<!-- DeviceName by Income -->
+	  <ml-highchart highchart-config="ctrl.highchartConfig2" ml-search="ctrl.mlSearch"></ml-highchart>
+<!-- DeviceName by Gender -->
+	  <ml-highchart highchart-config="ctrl.highchartConfig3" ml-search="ctrl.mlSearch"></ml-highchart>
+	</uib-tab>
+	<uib-tabset>
+  </div>
+</div>

@@ -1,0 +1,88 @@
+<html>
+<head>
+<title>
+Mapview
+</title>
+<script src='//maps.googleapis.com/maps/api/js?v=3.&libraries=drawing&sensor=false'></script>
+<link rel="stylesheet" href="/bower_components/ml-google-maps-ng/dist/ml-google-maps-ng.css">
+<style type="text/css">
+.map-canvas { height: 400px !important; }
+</style>
+</head>
+<body>
+Mapview
+
+<ml-google-search-map map="myMap.map" options="myMap.options"
+            facets="myFacets.facets" markers="myMap.markers" bounds-changed="boundsChanged(bounds)"
+            show-result="showResult(uri)" show-context-menu="resetMap()" selections="myMap.selections">
+</ml-google-search-map>
+<ml-google-search-map-legend facets="myFacets.facets"></ml-google-search-map-legend>
+
+<script src='/bower_components/angular-ui-utils/ui-utils[.min].js'></script>
+<script src='/bower_components/angular-ui-map/ui-map[.min].js'></script>
+<script src='/bower_components/ml-google-maps-ng/dist/ml-google-maps-ng[.min].js'></script>
+<script>
+
+MyCtrl.$inject = ['$scope'];
+function MyCtrl($scope) {
+  var ctrl = this;
+  var initMapOptions = {
+    center: new $window.google.maps.LatLng(52.3881895, 4.8447237),
+    zoom: 10,
+    mapTypeId: $window.google.maps.MapTypeId.ROADMAP
+  };
+
+  ctrl.myMap = {
+    map: null,
+    options: angular.extend({}, initMapOptions),
+    markers: [],
+    selections: []
+  };
+
+  ctrl.myFacets = {
+    facets: {
+      locations: {
+        count: 4262,
+        boxes: [{
+          count: 625,
+          s: 52.28889,
+          w: 4.856865,
+          n: 52.33222,
+          e: 5.019565
+        }, {
+          count: 1301,
+          s: 52.33256,
+          w: 4.763993,
+          n: 52.40219,
+          e: 4.844532
+        }, {
+          count: 2336,
+          s: 52.33251,
+          w: 4.844792,
+          n: 52.42354,
+          e: 5.025896
+        }]
+      }
+    }
+  };
+
+  ctrl.boundsChanged = function() {
+    // place your geospatial search code here, and make that update $scope.myFacets
+  };
+
+  ctrl.resetMap = function() {
+    ctrl.myMap.options = angular.extend({}, initMapOptions);
+    angular.forEach(model.searchMap.selections, function(overlay, index) {
+      overlay.setMap(null);
+    });
+    model.searchMap.selections.length = 0;
+  };
+
+  ctrl.showResult = function(uri) {
+    $window.alert('You clicked ' + uri);
+  };
+}
+</script>
+</body>
+</html>
+
