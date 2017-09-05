@@ -866,9 +866,7 @@ function unescape(s) {
  * @return  {Stream}
  */
 function inject(src, label, order) {
-  var options = {
-    read: false
-  };
+  var options = {};
   if (label) {
     options.name = 'inject:' + label;
   }
